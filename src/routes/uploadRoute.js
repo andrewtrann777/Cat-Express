@@ -3,20 +3,18 @@ const multer = require("multer");
 const path = require("path");
 const authenticateMiddleware = require("../middleware/authenticateMiddleware");
 
-const picturesDirectory = path.resolve("pictures");
+const router = express.Router();
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, picturesDirectory);
+    cb(null, path.resolve("pictures"));
   },
   filename: (req, file, cb) => {
     cb(null, `${file.originalname.split(".")[0]}-${Date.now()}.${file.originalname.split(".")[1]}`);
   },
 });
-const uploadRoute = multer({ storage });
+const upload = multer({ storage });
 
-const router = express.Router();
-
-router.post("/", authenticateMiddleware, uploadRoute.single("upload_file"), (req, res) => {
+router.post("/", authenticateMiddleware, upload.single("upload_file"), (req, res) => {
   console.log(req.file);
 
   if (req.file.size > 2 * 1024^2) return res.sendStatus(413);
