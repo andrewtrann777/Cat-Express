@@ -7,6 +7,6 @@ module.exports = async (req, res, next) => {
     req.user = jwt.verify(token, process.env.MY_SECRET);
     next();
   } catch (error) {
-    res.sendStatus(401);
+    res.clearCookie("token").sendStatus(401);
   }
 }

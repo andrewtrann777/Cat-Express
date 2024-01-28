@@ -5,13 +5,13 @@ module.exports = sequelize.define("User", {
   username: {
     type: DataTypes.STRING,
     primaryKey: true,
-    allowNull: false,
+    allowNull: false
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
+    allowNull: false
+  }
 }, {
   createdAt: false,
-  updatedAt: false,
+  updatedAt: false
 });

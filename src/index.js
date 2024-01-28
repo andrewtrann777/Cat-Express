@@ -3,8 +3,8 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const fs = require("fs");
 const sequelize = require("./sequelize");
-const loginRoute = require("./routes/loginRoute");
-const uploadRoute = require("./routes/uploadRoute");
+const authRoute = require("./routes/api/authRoute");
+const uploadRoute = require("./routes/api/picturesRoute");
 
 const app = express();
 const port = process.env.PORT ?? 8080;
@@ -32,8 +32,13 @@ app.use(
     extended: true,
   }),
 );
-app.use("/login", loginRoute);
-app.use("/upload", uploadRoute);
+
+app.use("/api/auth", authRoute);
+app.use("/api/pictures", uploadRoute);
+
+app.get("/", (req, res) => {
+  res.send("Hello, world!");
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
