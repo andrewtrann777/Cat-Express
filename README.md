@@ -6,7 +6,7 @@ To start the application, run:
 ```bash
 yarn --frozen-lockfile && node .
 ```
-When signing in, there is an already-existing user.
+The client can be found in this [repository](https://github.com/andrewtrann777/Cat-Express-Client). When signing in, there is an already-existing user:
 ```txt
 Username: test
 Password: test
