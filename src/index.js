@@ -1,45 +1,30 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const path = require("path");
-const fs = require("fs");
-const sequelize = require("./sequelize");
-const authRoute = require("./routes/api/authRoute");
-const uploadRoute = require("./routes/api/picturesRoute");
+
+const errorHandlerMiddleware = require("./middleware/errorHandlerMiddleware");
+const authRoute = require("./routes/authRoute");
+const uploadRoute = require("./routes/picturesRoute");
+const authenticate = require("./authenticate");
+
 
 const app = express();
-const port = process.env.PORT ?? 8080;
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    await sequelize.sync();
-    console.log("Established database connection.");
-  } catch (error) {
-    throw error;
-  }
-})();
+// Middleware
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const pictureDirectory = path.resolve("pictures");
+// Routes
+app.use("/auth", authRoute);
+app.use("/pictures", uploadRoute);
 
-if (!fs.existsSync(pictureDirectory)) {
-  fs.mkdirSync(pictureDirectory);
-}
+// Error handler
+app.use(errorHandlerMiddleware);
 
-app.use(
-  cookieParser(),
-  express.json(),
-  express.urlencoded({
-    extended: true,
-  }),
-);
+authenticate();
 
-app.use("/api/auth", authRoute);
-app.use("/api/pictures", uploadRoute);
-
-app.get("/", (req, res) => {
-  res.send("Hello, world!");
-});
+const port = process.env.EXPRESS_PORT ?? 8080;
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`Listening on port ${port}.`);
 });

@@ -1,16 +1,19 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const authenticationMiddleware = require("../../middleware/authenticationMiddleware");
-const userModel = require("../../models/userModel");
+
+const authenticationMiddleware = require("../middleware/authenticationMiddleware");
+const userModel = require("../models/userModel");
 
 const router = express.Router();
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const {username, password} = req.body;
 
     const user = await userModel.findOne({
-      where: { username }
+      where: {
+        username
+      }
     });
 
     if (!user) {
@@ -19,24 +22,29 @@ router.post("/signup", async (req, res) => {
       });
     }
 
-    await userModel.create({ username, password });
+    await userModel.create({
+      username,
+      password
+    });
 
     res.sendStatus(200);
   } catch (error) {
-    res.sendStatus(400);
+    next(error);
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
     const user = await userModel.findOne({
-      where: { username }
+      where: {
+        username
+      }
     });
 
     if (!user || !user.password === password) {
-      return res.json({
+      return res.sendStatus(401).json({
         message: "You have entered an invalid username/password."
       });
     }
@@ -51,16 +59,17 @@ router.post("/login", async (req, res) => {
 
     res.sendStatus(200);
   } catch (error) {
-    res.sendStatus(400);
+    next(error);
   }
 });
 
-router.delete("/logout", authenticationMiddleware, (req, res) => {
+router.delete("/logout", authenticationMiddleware, (req, res, next) => {
   try {
     res.clearCookie("token");
     res.redirect("/");
+    res.sendStatus(200);
   } catch (error) {
-    res.sendStatus(400);
+    next(error)
   }
 });
 

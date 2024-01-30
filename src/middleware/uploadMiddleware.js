@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
   },
   filename: async (req, file, cb) => {
     const pictures = await fs.readdir(pictureDirectory);
-    cb(null, `IMG_${pictures.length}.${file.originalname.split(".")[1]}`)
+    cb(null, `${pictures.length}.${file.originalname.split(".")[1]}`)
   }
 });
 const upload = multer({ storage });
