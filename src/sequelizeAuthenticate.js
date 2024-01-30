@@ -2,7 +2,7 @@ const sequelize = require("./sequelize");
 
 const userModel = require("./models/userModel");
 
-const authenticate = async () => {
+const sequelizeAuthenticate = async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync();
@@ -18,4 +18,4 @@ const authenticate = async () => {
   }
 }
 
-module.exports = authenticate;
+module.exports = sequelizeAuthenticate;
