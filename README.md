@@ -1,5 +1,5 @@
 # Cat-Express
-REST API for cats.
+REST API for (supposedly) pictures of cats.
 
 ## Getting Started
 To start the application, run:
