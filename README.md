@@ -2,11 +2,11 @@
 REST API for pictures of cats.
 
 ## Environment Variables
-After creating a `.env` file, run
+Create a file named `.env`. After creating the file, run:
 ```bash
 python3 generateRandomHash.py
 ```
-In `.env`, set `TOKEN_SECRET` equal to the generated hash.
+Set `TOKEN_SECRET` equal to the randomly generated hash in `.env`.
 
 ## Getting Started
 To start the application, run:
