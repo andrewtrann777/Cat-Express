@@ -14,6 +14,7 @@ router.get("/:id", authenticationMiddleware, async (req, res, next) => {
     const pictures = await fs.readdir(picturesDirectory);
 
     res.sendFile(path.join(picturesDirectory, pictures[req.params.id]));
+    res.sendStatus(200);
   } catch (error) {
     next(error);
   }
@@ -21,6 +22,9 @@ router.get("/:id", authenticationMiddleware, async (req, res, next) => {
 
 router.post("/upload", authenticationMiddleware, uploadMiddleware, (req, res, next) => {
   try {
+    if (!req.file) {
+      return res.sendStatus(422);
+    }
     if (req.file.size > 2 * 1024 * 1024) {
       return res.sendStatus(413).json({
         message: "The uploaded file size exceeds 2 MB."
