@@ -1,6 +1,11 @@
 # Cat-Express
 REST API for pictures of cats.
 
+## Table of Contents
+- [Environment Variables](#environment-variables)
+- [Running the Application](#running-the-application)
+- [REST Endpoints](#rest-endpoints)
+
 ## Environment Variables
 Create a file named `.env`. After creating the file, run:
 ```bash
