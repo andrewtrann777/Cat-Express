@@ -8,7 +8,7 @@ python3 generateRandomHash.py
 ```
 Set `TOKEN_SECRET` equal to the randomly generated hash in `.env`.
 
-## Getting Started
+## Running the Application
 To start the application, run:
 ```bash
 yarn --frozen-lockfile && node .
@@ -18,3 +18,10 @@ When signing in, there is an already-existing user:
 Username: test
 Password: test
 ```
+
+## REST Endpoints
+- `localhost:8080/auth/signup` (POST)
+- `localhost:8080/auth/login` (POST)
+- `localhost:8080/auth/logout` (POST)
+- `localhost:8080/pictures/:id` (GET)
+- `localhost:8080/pictures/upload` (POST)
