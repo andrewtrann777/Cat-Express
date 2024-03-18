@@ -1,5 +1,5 @@
 # Cat-Express
-REST API for pictures of cats.
+REST API File Server.
 
 ## Table of Contents
 - [Environment Variables](#environment-variables)
